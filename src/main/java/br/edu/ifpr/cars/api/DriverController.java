@@ -28,31 +28,34 @@ import br.edu.ifpr.cars.domain.DriverRepository;
 
 @Service
 @RestController
-@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/drivers", produces = MediaType.APPLICATION_JSON_VALUE)
 public class DriverController {
 
-    @Autowired // injeção de dependência
-    DriverRepository driverRepository; // objeto instancia do repositorio
+    private final DriverRepository driverRepository;
 
-    @GetMapping("/drivers")
+    public DriverController(DriverRepository driverRepository) {
+        this.driverRepository = driverRepository;
+    }
+
+    @GetMapping
     public List<Driver> listDrivers() {
         return driverRepository.findAll();
     }
 
-    // definir uma Exception personalizada
-    @GetMapping("/drivers/{id}")
+    @GetMapping("/{id}")
     public Driver findDriver(@PathVariable("id") Long id) {
-        return driverRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return driverRepository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "Driver not found"));
     }
 
-    @PostMapping("/drivers")
+    @PostMapping
     public Driver createDriver(@RequestBody Driver driver) {
         return driverRepository.save(driver);
     }
 
     // update
-    @PutMapping("/drivers/{id}")
+    @PutMapping("/{id}")
     public Driver fullUpdateDriver(@PathVariable("id") Long id,
             @RequestBody Driver driver) {
         Driver foundDriver = findDriver(id);
@@ -61,7 +64,7 @@ public class DriverController {
         return driverRepository.save(foundDriver);
     }
 
-    @PatchMapping("/drivers/{id}")
+    @PatchMapping("/{id}")
     public Driver incrementalUpdateDriver(@PathVariable("id") Long id,
             @RequestBody Driver driver){
             Driver foundDriver = findDriver(id);
@@ -75,7 +78,7 @@ public class DriverController {
             return driverRepository.save(foundDriver);
     }
 
-    @DeleteMapping("/drivers/{id}")
+    @DeleteMapping("/{id}")
     public void deleteDriver(@PathVariable("id") Long id){
         driverRepository.deleteById(id);
     }

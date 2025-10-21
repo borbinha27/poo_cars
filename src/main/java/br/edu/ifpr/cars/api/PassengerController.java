@@ -28,31 +28,34 @@ import br.edu.ifpr.cars.domain.PassengerRepository;
 
 @Service
 @RestController
-@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/passengers", produces = MediaType.APPLICATION_JSON_VALUE)
 public class PassengerController {
 
-    @Autowired // injeção de dependência
-    PassengerRepository passengerRepository; // objeto instancia do repositorio
+    private final PassengerRepository passengerRepository;
 
-    @GetMapping("/passengers")
+    public PassengerController(PassengerRepository passengerRepository) {
+        this.passengerRepository = passengerRepository;
+    }
+
+    @GetMapping
     public List<Passenger> listPassengers() {
         return passengerRepository.findAll();
     }
 
-    // definir uma Exception personalizada
-    @GetMapping("/passengers/{id}")
+    @GetMapping("/{id}")
     public Passenger findPassenger(@PathVariable("id") Long id) {
-        return passengerRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return passengerRepository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "Passenger not found"));
     }
 
-    @PostMapping("/passengers")
+    @PostMapping
     public Passenger createPassenger(@RequestBody Passenger passenger) {
         return passengerRepository.save(passenger);
     }
 
     // update
-    @PutMapping("/passengers/{id}")
+    @PutMapping("/{id}")
     public Passenger fullUpdatePassenger(@PathVariable("id") Long id,
             @RequestBody Passenger passenger) {
         Passenger foundPassenger = findPassenger(id);
@@ -61,7 +64,7 @@ public class PassengerController {
         return passengerRepository.save(foundPassenger);
     }
 
-    @PatchMapping("/passengers/{id}")
+    @PatchMapping("/{id}")
     public Passenger incrementalUpdatePassenger(@PathVariable("id") Long id,
             @RequestBody Passenger passenger){
             Passenger foundPassenger = findPassenger(id);
@@ -75,7 +78,7 @@ public class PassengerController {
             return passengerRepository.save(foundPassenger);
     }
 
-    @DeleteMapping("/passengers/{id}")
+    @DeleteMapping("/{id}")
     public void deletePassenger(@PathVariable("id") Long id){
         passengerRepository.deleteById(id);
     }
