@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -27,7 +28,7 @@ import br.edu.ifpr.cars.domain.PassengerRepository;
 
 @Service
 @RestController
-@RequestMapping("/passengers")
+@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 public class PassengerController {
 
     @Autowired // injeção de dependência
@@ -79,7 +80,7 @@ public class PassengerController {
         passengerRepository.deleteById(id);
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+        @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidation(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getFieldErrors()
