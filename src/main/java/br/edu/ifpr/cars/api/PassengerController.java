@@ -25,6 +25,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import br.edu.ifpr.cars.domain.Passenger;
 import br.edu.ifpr.cars.domain.PassengerRepository;
+import jakarta.validation.Valid;
 
 @Service
 @RestController
@@ -56,7 +57,7 @@ public class PassengerController {
 
     // update
     @PutMapping("/{id}")
-    public Passenger fullUpdatePassenger(@PathVariable("id") Long id,
+    public Passenger fullUpdatePassenger(@PathVariable("id") @Valid Long id,
             @RequestBody Passenger passenger) {
         Passenger foundPassenger = findPassenger(id);
         foundPassenger.setName(passenger.getName());
@@ -66,7 +67,7 @@ public class PassengerController {
     }
 
     @PatchMapping("/{id}")
-    public Passenger incrementalUpdatePassenger(@PathVariable("id") Long id,
+    public Passenger incrementalUpdatePassenger(@PathVariable("id") @Valid Long id,
             @RequestBody Passenger passenger){
             Passenger foundPassenger = findPassenger(id);
 

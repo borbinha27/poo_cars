@@ -25,6 +25,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import br.edu.ifpr.cars.domain.Driver;
 import br.edu.ifpr.cars.domain.DriverRepository;
+import jakarta.validation.Valid;
 
 @Service
 @RestController
@@ -56,7 +57,7 @@ public class DriverController {
 
     // update
     @PutMapping("/{id}")
-    public Driver fullUpdateDriver(@PathVariable("id") Long id,
+    public Driver fullUpdateDriver(@PathVariable("id") @Valid Long id,
             @RequestBody Driver driver) {
         Driver foundDriver = findDriver(id);
         foundDriver.setName(driver.getName());
@@ -66,7 +67,7 @@ public class DriverController {
     }
 
     @PatchMapping("/{id}")
-    public Driver incrementalUpdateDriver(@PathVariable("id") Long id,
+    public Driver incrementalUpdateDriver(@PathVariable("id") @Valid Long id,
             @RequestBody Driver driver){
             Driver foundDriver = findDriver(id);
             
