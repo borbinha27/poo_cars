@@ -61,6 +61,7 @@ public class PassengerController {
         Passenger foundPassenger = findPassenger(id);
         foundPassenger.setName(passenger.getName());
         foundPassenger.setEmail(passenger.getEmail());
+        foundPassenger.setCpf(passenger.getCpf());
         return passengerRepository.save(foundPassenger);
     }
 
@@ -70,10 +71,13 @@ public class PassengerController {
             Passenger foundPassenger = findPassenger(id);
 
             foundPassenger.setName(Optional.ofNullable(passenger.getName())
-            .orElse(foundPassenger.getName()));
+                .orElse(foundPassenger.getName()));
 
             foundPassenger.setEmail(Optional.ofNullable(passenger.getEmail())
-            .orElse(foundPassenger.getEmail()));
+                .orElse(foundPassenger.getEmail()));
+
+            foundPassenger.setCpf(Optional.ofNullable(passenger.getCpf())
+                .orElse(foundPassenger.getCpf()));
 
             return passengerRepository.save(foundPassenger);
     }

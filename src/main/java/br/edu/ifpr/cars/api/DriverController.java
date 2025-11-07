@@ -61,6 +61,7 @@ public class DriverController {
         Driver foundDriver = findDriver(id);
         foundDriver.setName(driver.getName());
         foundDriver.setBirthDate(driver.getBirthDate());
+        foundDriver.setCpf(driver.getCpf());
         return driverRepository.save(foundDriver);
     }
 
@@ -70,10 +71,13 @@ public class DriverController {
             Driver foundDriver = findDriver(id);
             
             foundDriver.setName(Optional.ofNullable(driver.getName())
-            .orElse(foundDriver.getName()));
+                .orElse(foundDriver.getName()));
 
             foundDriver.setBirthDate(Optional.ofNullable(driver.getBirthDate())
-            .orElse(foundDriver.getBirthDate()));
+                .orElse(foundDriver.getBirthDate()));
+
+            foundDriver.setCpf(Optional.ofNullable(driver.getCpf())
+                .orElse(foundDriver.getCpf()));
 
             return driverRepository.save(foundDriver);
     }
