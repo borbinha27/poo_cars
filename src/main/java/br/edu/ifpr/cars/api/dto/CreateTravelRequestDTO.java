@@ -7,12 +7,12 @@ import lombok.Data;
 @Data
 public class CreateTravelRequestDTO {
     
-    @NotNull(message = "ID do passageiro é obrigatório")
+    @NotNull()
     private Long passengerId;
     
-    @NotBlank(message = "Origem é obrigatória")
+    @NotBlank()
     private String origin;
     
-    @NotBlank(message = "Destino é obrigatório")
+    @NotBlank()
     private String destination;
 }

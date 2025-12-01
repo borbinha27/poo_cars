@@ -14,7 +14,7 @@ public class TravelRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @NotNull(message = "Passageiro é obrigatório")
+    @NotNull()
     @ManyToOne
     @JoinColumn(name = "passenger_id", nullable = false)
     private Passenger passenger;
@@ -23,11 +23,11 @@ public class TravelRequest {
     @JoinColumn(name = "driver_id")
     private Driver driver;
     
-    @NotBlank(message = "Origem é obrigatória")
+    @NotBlank()
     @Column(nullable = false)
     private String origin;
     
-    @NotBlank(message = "Destino é obrigatório")
+    @NotBlank()
     @Column(nullable = false)
     private String destination;
     

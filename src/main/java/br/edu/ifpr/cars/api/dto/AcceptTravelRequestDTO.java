@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 public class AcceptTravelRequestDTO {
     
-    @NotNull(message = "ID do motorista é obrigatório")
+    @NotNull()
     private Long driverId;
 }
