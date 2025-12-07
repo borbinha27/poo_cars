@@ -23,10 +23,6 @@ public class TravelRequestController {
         this.travelService = travelService;
     }
     
-    /**
-     * POST /travel-requests
-     * Passageiro cria uma nova solicitação de viagem
-     */
     @PostMapping
     public ResponseEntity<TravelRequest> createTravelRequest(
             @Valid @RequestBody CreateTravelRequestDTO dto) {
@@ -38,10 +34,6 @@ public class TravelRequestController {
         return ResponseEntity.status(HttpStatus.CREATED).body(travelRequest);
     }
     
-    /**
-     * PATCH /travel-requests/{id}/accept
-     * Motorista aceita uma viagem
-     */
     @PatchMapping("/{id}/accept")
     public ResponseEntity<TravelRequest> acceptTravelRequest(
             @PathVariable Long id,
@@ -50,10 +42,6 @@ public class TravelRequestController {
         return ResponseEntity.ok(travelRequest);
     }
     
-    /**
-     * PATCH /travel-requests/{id}/refuse
-     * Motorista recusa uma viagem
-     */
     @PatchMapping("/{id}/refuse")
     public ResponseEntity<TravelRequest> refuseTravelRequest(
             @PathVariable Long id,
@@ -62,10 +50,6 @@ public class TravelRequestController {
         return ResponseEntity.ok(travelRequest);
     }
     
-    /**
-     * GET /travel-requests
-     * Lista todas as viagens
-     */
     @GetMapping
     public ResponseEntity<List<TravelRequest>> listAllTravelRequests(
             @RequestParam(required = false) TravelRequestStatus status) {
@@ -80,20 +64,12 @@ public class TravelRequestController {
         return ResponseEntity.ok(travelRequests);
     }
     
-    /**
-     * GET /travel-requests/{id}
-     * Busca uma viagem por ID
-     */
     @GetMapping("/{id}")
     public ResponseEntity<TravelRequest> findTravelRequest(@PathVariable Long id) {
         TravelRequest travelRequest = travelService.findTravelRequestById(id);
         return ResponseEntity.ok(travelRequest);
     }
     
-    /**
-     * GET /travel-requests/passenger/{passengerId}
-     * Lista viagens de um passageiro específico
-     */
     @GetMapping("/passenger/{passengerId}")
     public ResponseEntity<List<TravelRequest>> listTravelRequestsByPassenger(
             @PathVariable Long passengerId) {
@@ -101,10 +77,6 @@ public class TravelRequestController {
         return ResponseEntity.ok(travelRequests);
     }
     
-    /**
-     * GET /travel-requests/driver/{driverId}
-     * Lista viagens de um motorista específico
-     */
     @GetMapping("/driver/{driverId}")
     public ResponseEntity<List<TravelRequest>> listTravelRequestsByDriver(
             @PathVariable Long driverId) {
